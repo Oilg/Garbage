@@ -14,3 +14,4 @@ from myapp import mymodel
 - Дальше вводим: alembic revision --autogenerate -m "comment"
 - Будет создана миграция
 - Дальше вводим: alembic upgrade heads# Garbage
+# Garbage
