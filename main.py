@@ -32,11 +32,12 @@ class User(Base):
 
 class UserDAL:
     """Data Access Layer for operating user info"""
-    def __init__ (self, db_session: AsyncSession):
+
+    def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 
-    async def create_user (
-        self, name: str, last_name: str, address: str, phone: str,  email: str
+    async def create_user(
+            self, name: str, last_name: str, address: str, phone: str, email: str
     ) -> User:
         new_user = User(
             name=name,
@@ -90,11 +91,11 @@ class UserCreate(BaseModel):
         if not LETTER_MATCH_PATTERN.match(value):
             raise HTTPException(
                 status_code=422, detail="Last name should contains only letters"
-        )
+            )
         return value
 
 
-app = FastAPI(title= "Garbage")
+app = FastAPI(title="Garbage")
 
 user_router = APIRouter()
 
@@ -124,6 +125,7 @@ async def _create_new_user(body: UserCreate) -> ShowUser:
 @user_router.post("/", response_model=ShowUser)
 async def create_user(body: UserCreate) -> ShowUser:
     return await _create_new_user(body)
+
 
 # create the instance for the routes
 main_api_router = APIRouter()
