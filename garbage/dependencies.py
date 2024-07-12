@@ -9,7 +9,7 @@ from garbage.services.delete_user import DeleteUser
 
 async def create_engine() -> AsyncEngine:
     return create_async_engine(
-        "postgresql+asyncpg://user:password@localhost/db"
+        "postgresql+asyncpg://user:password@localhost:5432/db"
     )
 
 
