@@ -1,4 +1,4 @@
-from pydantic import BaseModel, StrictStr
+from pydantic import BaseModel, StrictStr, EmailStr
 
 
 class UserModel(BaseModel):
@@ -16,7 +16,7 @@ class CreateUserRequest(BaseModel):
     last_name: StrictStr
     address: StrictStr
     phone: StrictStr
-    email: StrictStr
+    email: EmailStr
 
 
 class CreateUserResponse(BaseModel):

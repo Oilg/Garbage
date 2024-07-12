@@ -1,7 +1,7 @@
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from garbage_app.repositories.repository import UsersRepository
+from garbage.repositories.repository import UsersRepository
 
 
 class DeleteUser:
