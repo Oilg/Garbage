@@ -16,7 +16,7 @@ class CreateUserRequest(BaseModel):
     last_name: StrictStr
     address: StrictStr
     phone: StrictStr
-    email: EmailStr
+    email: StrictStr
 
 
 class CreateUserResponse(BaseModel):

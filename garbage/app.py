@@ -11,7 +11,7 @@ SERVICE_NAME = "garbage"
 def create_app() -> FastAPI:
     app = FastAPI(title=SERVICE_NAME)
 
-    app.include_router(api_router_user_v1)
+    app.include_router(api_router_user_v1, prefix="/api/v1/user")
     app.add_exception_handler(RequestValidationError, request_exception_handler)
     app.add_exception_handler(status.HTTP_404_NOT_FOUND, request_not_found_handler)
 
