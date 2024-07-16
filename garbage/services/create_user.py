@@ -3,7 +3,7 @@ import re
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from garbage.api.v1.types import UserModel
+from garbage.api.v1.types import CreateUserRequest
 from garbage.errors import user_with_phone_exists_error, invalid_name
 from garbage.repositories.repository import UsersRepository
 
@@ -23,7 +23,7 @@ class CreateUser:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                                 detail=user_with_phone_exists_error)
         await self.users_database.create(
-            UserModel(
+            CreateUserRequest(
                 first_name=first_name,
                 last_name=last_name,
                 address=address,

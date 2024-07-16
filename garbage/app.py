@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, status
 from fastapi.exceptions import RequestValidationError
 
@@ -21,3 +22,4 @@ def create_app() -> FastAPI:
 if __name__ == "__main__":
     settings_ = Settings
     app_ = create_app()
+    uvicorn.run(app_)

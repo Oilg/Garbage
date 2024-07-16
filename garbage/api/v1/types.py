@@ -16,17 +16,11 @@ class CreateUserRequest(BaseModel):
     last_name: StrictStr
     address: StrictStr
     phone: StrictStr
-    email: StrictStr
+    email: EmailStr
 
 
 class CreateUserResponse(BaseModel):
-    id: int
-    first_name: str
-    last_name: str
-    address: str
-    phone: str
-    email: str
-    is_active: bool
+    result: UserModel | None
 
 
 class DeleteUserResponse(BaseModel):
