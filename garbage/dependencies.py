@@ -1,6 +1,5 @@
-from aiopg.sa import SAConnection
 from fastapi import Depends
-from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncConnection
 
 from garbage.repositories.repository import UsersRepository
 from garbage.services.create_user import CreateUser
@@ -13,13 +12,12 @@ async def create_engine() -> AsyncEngine:
     )
 
 
-async def db_connect(engine: AsyncEngine = Depends(create_engine)):
-    async with engine.connect() as conn:
+async def db_connect(engine: AsyncConnection = Depends(create_engine)):
+    async with engine.begin() as conn:
         yield conn
-        await conn.close()
 
 
-async def user_repository(conn: SAConnection = Depends(db_connect)) -> UsersRepository:
+async def user_repository(conn: AsyncConnection = Depends(db_connect)) -> UsersRepository:
     return UsersRepository(conn)
 
 
