@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "garbage"
+version = "0.1.0"
+description = ""
+authors = ["loginov-ea <loginov-ea@zvuk.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "0.88.0"
+uvicorn = "0.20.0"
+sqlalchemy = "1.4.45"
+envparse = "0.2.0"
+psycopg2-binary = "^2.9.9"
+asyncpg = "0.27.0"
+alembic = "1.9.0"
+greenlet = "^3.0.3"
+pydantic = ">=1.10.13,<1.11.0"
+aiopg = ">=1.4.0,<1.5.0"
+starlette = ">=0.22.0,<0.23.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.2"
+testcontainers = "^4.7.2"
+httpx = "^0.27.0"
+requests = "^2.32.3"
+sqlalchemy-utils = "^0.41.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
