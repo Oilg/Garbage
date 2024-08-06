@@ -17,12 +17,12 @@ class UsersRepository(BaseRepository):
     table: Table = users
 
     async def user_exists_by_id(self, user_id: int) -> bool:
-        get_query = self.table.select().where(self.table.c.phone == user_id)
-        r_ = await self._connection.execute(get_query)
-        result = await r_.fetchall()
-        if len(result) == 1:
+        get_query = self.table.select().where(self.table.c.id == user_id)
+        result = await self._connection.execute(get_query)
+        if result.fetchone() is not None:
             return True
-        return False
+        else:
+            return False
 
     async def user_exists_by_phone(self, phone: str) -> bool:
         get_query = self.table.select().where(self.table.c.phone == phone)
@@ -32,12 +32,9 @@ class UsersRepository(BaseRepository):
     async def create(self, user_input: CreateUserRequest) -> UserModel:
         insert_query = self.table.insert().values(user_input.dict()).returning(*self.table.c)
         result = await self._connection.execute(insert_query)
-        await self._connection.commit()
         user_row = result.fetchone()
         return UserModel(**user_row) if user_row else None
 
-    async def delete(self, user_id: int) -> UserModel:
+    async def delete(self, user_id: int):
         deactivate_query = self.table.update().where(self.table.c.id == user_id).values(is_active=False)
-        r_ = await self._connection.execute(deactivate_query)
-        result = await r_.fetchone()
-        return UserModel(**dict(result))
+        await self._connection.execute(deactivate_query)

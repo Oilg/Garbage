@@ -12,10 +12,31 @@ class ICharacteristics(ABC):
         raise NotImplementedError
 
 
+class Car:
+
+    @property
+    def color(self) -> str:
+        return "red"
+
+    @color.setter
+    def color(self, value: str) -> None:
+        self.color = value
+
+Car.color
+
 class Car(ICharacteristics, ABC):
 
-    def horse_power(self):
-        return "Horse power = "
+    def __init__(self):
+        self.__horse_power = ''
+        self.__speed = ''
+
+    @property.fget
+    def get_horse_power(self):
+        return self.__horse_power
+
+    @property.fdel
+    def del_horse_power(self):
+        del self.__horse_power
 
     def speed(self):
         return "Speed = "
@@ -25,6 +46,13 @@ class Car(ICharacteristics, ABC):
 
     def turn_right(self):  # убрать в интерфейс
         raise NotImplementedError
+
+    @staticmethod
+    def available_colors():
+        return ["black", "blue", "gray"]
+
+
+Car.available_colors()
 
 
 class ICarBodyForm(ABC):
@@ -84,6 +112,8 @@ hatchback.form()
 
 # TODO посмотреть что такое @property, @class_method, @static_method
 # TODO посмотреть что такое generic
+
+# класс VolvoCar c дженериками на седан и хетчбэк
 class VolvoCarSedan(Sedan):
     ...
 
@@ -99,3 +129,7 @@ print("Это вольво хечбэк")
 volvo_hatchback = VolvoCarHatchback()
 volvo_hatchback.speed()
 volvo_hatchback.form()
+
+
+a = {[3, 4]: 147}
+a([3, 4])
