@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import ORJSONResponse
+from pydantic import conint
 from starlette import status
 
 from garbage.api.v1.types import CreateUserResponse, CreateUserRequest, DeleteUserResponse, GetUserResponse
 from garbage.dependencies import get_create_user_service, get_delete_user_service, get_user_service
 from garbage.services.create_user import CreateUser
 from garbage.services.delete_user import DeleteUser
-from garbage.services.get_user import GetUser
+from garbage.services.get_user import GetUserService
 
 api_router_user = APIRouter(default_response_class=ORJSONResponse)
 
@@ -31,8 +32,8 @@ async def delete_user(
 
 @api_router_user.get(path="/{id}", response_model=GetUserResponse)
 async def get_user(
-        id: int,
-        get_users_service: GetUser = Depends(get_user_service)
+        id: conint(ge=1, le=2147483647),
+        get_users_service: GetUserService = Depends(get_user_service)
 ) -> GetUserResponse:
     user = await get_users_service(user_id=id)
     return GetUserResponse(result=user)
