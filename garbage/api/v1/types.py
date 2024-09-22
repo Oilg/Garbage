@@ -1,4 +1,6 @@
-from pydantic import BaseModel, StrictStr, EmailStr
+from typing import Optional
+
+from pydantic import BaseModel, StrictStr, EmailStr, conint, StrictBool, constr
 
 
 class UserModel(BaseModel):
@@ -31,4 +33,22 @@ class GetUserResponse(BaseModel):
     status_code: int
     result: UserModel | None
 
+
+class EditUserRequest(BaseModel):
+    id: conint(ge=1, le=2147483647)
+    first_name: StrictStr
+    last_name: StrictStr
+    address: StrictStr
+    phone: Optional[
+        constr(
+            strip_whitespace=True,
+            regex=r"^(\+)[1-9][0-9\-\(\)\.]{9,15}$",
+        )
+    ]
+    email: EmailStr
+    is_active: StrictBool
+
+
+class EditUserResponse(BaseModel):
+    result: UserModel | None
 

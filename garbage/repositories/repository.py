@@ -2,7 +2,7 @@ from aiopg.sa import SAConnection
 from sqlalchemy import Table
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from garbage.api.v1.types import UserModel, CreateUserRequest
+from garbage.api.v1.types import UserModel, CreateUserRequest, EditUserRequest
 from garbage.repositories.v1.tables import users
 
 
@@ -13,7 +13,6 @@ class BaseRepository:
 
 
 class UsersRepository(BaseRepository):
-
     table: Table = users
 
     async def user_exists_by_id(self, user_id: int) -> bool:
@@ -38,3 +37,14 @@ class UsersRepository(BaseRepository):
     async def delete(self, user_id: int):
         deactivate_query = self.table.update().where(self.table.c.id == user_id).values(is_active=False)
         await self._connection.execute(deactivate_query)
+
+    async def update(self, user_input: EditUserRequest) -> UserModel | None:
+        update_query = (
+            self.table.update()
+            .where(self.table.c.id == user_input.id)
+            .values(user_input.dict())
+            .returning(*self.table.c)
+        )
+        result = await self._connection.execute(update_query)
+        user_row = result.fetchone()
+        return UserModel(**user_row) if user_row is not None else None
