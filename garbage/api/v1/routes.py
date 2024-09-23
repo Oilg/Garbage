@@ -3,9 +3,20 @@ from fastapi.responses import ORJSONResponse
 from pydantic import conint
 from starlette import status
 
-from garbage.api.v1.types import CreateUserResponse, CreateUserRequest, DeleteUserResponse, EditUserResponse, \
-    EditUserRequest, GetUserResponse
-from garbage.dependencies import get_create_user_service, get_delete_user_service, get_user_service, get_edit_user_service
+from garbage.api.v1.types import (
+    CreateUserResponse,
+    CreateUserRequest,
+    DeleteUserResponse,
+    EditUserResponse,
+    EditUserRequest,
+    GetUserResponse
+)
+from garbage.dependencies import (
+    get_create_user_service,
+    get_delete_user_service,
+    get_user_service,
+    get_edit_user_service
+)
 from garbage.services.create_user import CreateUser
 from garbage.services.delete_user import DeleteUser
 from garbage.services.get_user import GetUserService
