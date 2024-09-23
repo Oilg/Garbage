@@ -28,7 +28,6 @@ class DeleteUserResponse(BaseModel):
 
 
 class GetUserResponse(BaseModel):
-    status_code: int
     result: UserModel | None
 
 

@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncConnec
 from garbage.repositories.repository import UsersRepository
 from garbage.services.create_user import CreateUser
 from garbage.services.delete_user import DeleteUser
+from garbage.services.get_user import GetUserService
 
 
 async def create_engine() -> AsyncEngine:
@@ -27,3 +28,7 @@ async def get_create_user_service(users_db: UsersRepository = Depends(user_repos
 
 async def get_delete_user_service(users_db: UsersRepository = Depends(user_repository)) -> DeleteUser:
     return DeleteUser(users_database=users_db)
+
+
+async def get_user_service(users_db: UsersRepository = Depends(user_repository)) -> GetUserService:
+    return GetUserService(users_database=users_db)

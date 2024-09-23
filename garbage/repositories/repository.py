@@ -38,3 +38,9 @@ class UsersRepository(BaseRepository):
     async def delete(self, user_id: int):
         deactivate_query = self.table.update().where(self.table.c.id == user_id).values(is_active=False)
         await self._connection.execute(deactivate_query)
+
+    async def get(self, user_id: int) -> UserModel | None:
+        get_query = self.table.select().where(self.table.c.id == user_id)
+        result = await self._connection.execute(get_query)
+        user_row = result.fetchone()
+        return UserModel(**user_row) if user_row is not None else None
