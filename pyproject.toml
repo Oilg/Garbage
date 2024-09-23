@@ -18,6 +18,7 @@ greenlet = "^3.0.3"
 pydantic = ">=1.10.13,<1.11.0"
 aiopg = ">=1.4.0,<1.5.0"
 starlette = ">=0.22.0,<0.23.0"
+phonenumbers = "^8.13.45"
 
 
 [tool.poetry.group.test.dependencies]

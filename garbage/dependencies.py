@@ -5,6 +5,7 @@ from garbage.repositories.repository import UsersRepository
 from garbage.services.create_user import CreateUser
 from garbage.services.delete_user import DeleteUser
 from garbage.services.get_user import GetUserService
+from garbage.services.edit_user import EditUser
 
 
 async def create_engine() -> AsyncEngine:
@@ -32,3 +33,7 @@ async def get_delete_user_service(users_db: UsersRepository = Depends(user_repos
 
 async def get_user_service(users_db: UsersRepository = Depends(user_repository)) -> GetUserService:
     return GetUserService(users_database=users_db)
+
+
+async def get_edit_user_service(users_db: UsersRepository = Depends(user_repository)) -> EditUser:
+    return EditUser(users_database=users_db)
