@@ -1,10 +1,7 @@
 import re
 
-from starlette import status
-from starlette.exceptions import HTTPException
-
 from garbage.api.v1.types import UserModel, EditUserRequest
-from garbage.errors import invalid_name, user_id_doesnt_exist
+from garbage.errors import UserNotFoundError, UserInvalidNAmeError
 from garbage.repositories.repository import UsersRepository
 
 
@@ -23,14 +20,10 @@ class EditUser:
             is_active: bool
     ) -> UserModel:
         if not await self.users_database.user_exists_by_id(user_id):
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail=user_id_doesnt_exist)
+            raise UserNotFoundError()
         LETTER_MATCH_PATTERN = re.compile(r"[a-яА-Яa-zA-Z\-]+$")
         if not LETTER_MATCH_PATTERN.match(first_name) or not LETTER_MATCH_PATTERN.match(last_name):
-            raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail=invalid_name
-            )
+            raise UserInvalidNAmeError()
         return await self.users_database.update(
             EditUserRequest(
                 id=user_id,

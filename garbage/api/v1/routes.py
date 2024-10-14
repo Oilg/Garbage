@@ -45,7 +45,7 @@ async def delete_user(
 
 @api_router_user.get(path="/{id}", response_model=GetUserResponse)
 async def get_user(
-        id: conint(ge=1, le=2147483647),
+        id: int,
         get_users_service: GetUserService = Depends(get_user_service)
 ) -> GetUserResponse:
     user = await get_users_service(user_id=id)
