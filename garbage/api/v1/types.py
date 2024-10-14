@@ -1,10 +1,18 @@
 from typing import Optional
 
-from pydantic import BaseModel, StrictStr, EmailStr, conint, StrictBool, constr
+from pydantic import BaseModel, StrictStr, EmailStr, StrictBool, constr, PositiveInt
 
+MAX_INT_32 = 2147483647
+
+
+class PositiveInt32(PositiveInt):
+    le = MAX_INT_32
+
+
+# TODO сделать класс для телефна
 
 class UserModel(BaseModel):
-    id: int
+    id: PositiveInt32
     first_name: str
     last_name: str
     address: str
@@ -34,7 +42,7 @@ class GetUserResponse(BaseModel):
 
 
 class EditUserRequest(BaseModel):
-    id: conint(ge=1, le=2147483647)
+    id: PositiveInt32
     first_name: StrictStr
     last_name: StrictStr
     address: StrictStr
