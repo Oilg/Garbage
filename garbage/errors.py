@@ -1,6 +1,12 @@
 class BaseError(Exception):
     message = "Unexpected exception"
 
+    @property
+    def code(
+        self,
+    ) -> str:
+        return self.message.lower().replace(" ", "_")
+
     def __repr__(self) -> str:
         """Для отображения полного контекста ошибки в stderr"""
         context = [f"{key}: {value!r}" for key, value in self.__dict__.items()]
@@ -33,4 +39,4 @@ class UserWithPhoneExistError(BaseError):
 
 class UserInvalidNAmeError(BaseError):
     status_code = 422
-    message = f"UFirst name and Last name should contains only letters"
+    message = f"First name and Last name should contains only letters"
